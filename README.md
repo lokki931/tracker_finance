@@ -22,7 +22,7 @@ Finance Tracker is a simple and efficient web application built with React and V
 
 1. **Clone the repository**
    ```sh
-   git clone https://github.com/lokki931/trackerFinance.git
+   git clone https://github.com/lokki931/tracker_finance.git
    cd trackerFinance
    ```
 
