@@ -5,23 +5,27 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 const COLORS = ["#00C49F", "#FF6384"]; // Green for Income, Red for Expenses
 
 const PieChartComponent = () => {
-  const { transactions } = useContext(TransactionContext);
+  const { transactions, formatAmount } = useContext(TransactionContext);
   if (!transactions.length)
     return <p className="text-center text-gray-400">No data to display...</p>;
 
   // Summing income and expenses
-  const income = transactions
-    .filter((t) => t.amount > 0)
-    .reduce((acc, t) => acc + t.amount, 0);
-
-  const expenses = transactions
-    .filter((t) => t.amount < 0)
-    .reduce((acc, t) => acc + Math.abs(t.amount), 0);
+  const { income, expenses } = transactions.reduce(
+    (acc, t) => {
+      if (t.amount > 0) {
+        acc.income += t.amount;
+      } else {
+        acc.expenses += Math.abs(t.amount);
+      }
+      return acc;
+    },
+    { income: 0, expenses: 0 }
+  );
 
   // Prepare data for chart
   const data = [
-    { name: "Plus", value: income },
-    { name: "Minus", value: expenses },
+    { name: "Income", value: income },
+    { name: "Expenses", value: expenses },
   ];
 
   return (
@@ -42,7 +46,9 @@ const PieChartComponent = () => {
             <Cell key={`cell-${index}`} fill={COLORS[index]} />
           ))}
         </Pie>
-        <Tooltip />
+        <Tooltip
+          formatter={(value) => formatAmount(value)} // Форматування сум в тултипі
+        />
         <Legend />
       </PieChart>
     </div>

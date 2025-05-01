@@ -10,21 +10,22 @@ export const AddTransactionComponent = () => {
   const { transactions, setTransactions } = useContext(TransactionContext);
 
   const addTransaction = () => {
-    const amountValue = parseFloat(form.amount);
+    const amountValue = Number(form.amount);
 
-    if (!form.description || isNaN(amountValue)) {
-      return;
+    if (!form.description || isNaN(amountValue) || amountValue === 0) {
+      return; // Не дозволяємо додавати некоректні значення
     }
 
     const newTransaction = {
       id: Date.now(),
       description: form.description,
-      amount: amountValue,
+      amount: amountValue, // Зберігаємо як число
     };
 
     setTransactions([...transactions, newTransaction]);
     setForm(initialStateForm);
   };
+
   return (
     <div className="flex items-center gap-2">
       <Input

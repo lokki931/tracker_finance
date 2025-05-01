@@ -32,7 +32,8 @@ export const HistoryComponent = () => {
     },
   ];
 
-  const { transactions, total } = useContext(TransactionContext);
+  const { transactions, formattedTotal, formatAmount } =
+    useContext(TransactionContext);
 
   const [filter, setFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
@@ -93,7 +94,7 @@ export const HistoryComponent = () => {
                 </TableCell>
                 <TableCell>{transaction.description}</TableCell>
                 <TableCell className="text-right">
-                  {transaction.amount.toFixed(2)}
+                  {formatAmount(transaction.amount)}
                 </TableCell>
               </TableRow>
             ))
@@ -108,7 +109,7 @@ export const HistoryComponent = () => {
         <TableFooter>
           <TableRow>
             <TableCell colSpan={2}>Total</TableCell>
-            <TableCell className="text-right">${total.toFixed(2)}</TableCell>
+            <TableCell className="text-right">{formattedTotal}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>
