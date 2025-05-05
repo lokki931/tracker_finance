@@ -24,8 +24,8 @@ const PieChartComponent = () => {
 
   // Prepare data for chart
   const data = [
-    { name: "Income", value: income },
-    { name: "Expenses", value: expenses },
+    { name: "Inc", value: income },
+    { name: "Exp", value: expenses },
   ];
 
   return (
